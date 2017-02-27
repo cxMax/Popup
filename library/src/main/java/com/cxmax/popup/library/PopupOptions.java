@@ -12,15 +12,19 @@ import android.graphics.drawable.Drawable;
  */
 
 public class PopupOptions implements Cloneable {
+    public static final int STYLE_POPUP = 0;
+    public static final int STYLE_DIALOG = 1;
 
     private Drawable backgroundDrawable;
     private int backgroundId;
     private int windowWith;
     private int windowHeight;
     private Context context;
+    private int style; //0-popupwindow 1-dialog
 
     public PopupOptions(Context context) {
         this.context = context;
+        style = STYLE_POPUP;
     }
 
     public void backgroundId(int backgroundId) {
@@ -33,6 +37,10 @@ public class PopupOptions implements Cloneable {
 
     public void windowHeight(int windowHeight) {
         this.windowHeight = windowHeight;
+    }
+
+    public void style(int style) {
+        this.style = style;
     }
 
     public void background(Drawable backgroundDrawable) {
@@ -53,6 +61,10 @@ public class PopupOptions implements Cloneable {
 
     public int getWindowHeight() {
         return windowHeight;
+    }
+
+    public int getStyle(){
+        return style;
     }
 
     @Override

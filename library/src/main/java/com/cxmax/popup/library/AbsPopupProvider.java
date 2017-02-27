@@ -20,76 +20,48 @@ import android.widget.PopupWindow;
 
 public abstract class AbsPopupProvider<T> {
 
-    private static final int DEFAULT_WITDH = 312;
+    private static final int DEFAULT_WIDTH = 312;
     private static final int DEFAULT_HEIGHT = 390;
 
-    protected PopupWindow popupWindow;
     protected View rootView;
     protected Context context;
     protected PopupOptions popupOptions;
     protected PopupOptions defaultPopupOptions;
     protected PopupOperation popupOperation;
+    protected Generator generator;
 
     protected void createView() {
         if (rootView == null) {
             rootView = onCreateView();
             initDefaultOption();
+            initOperation();
             if (popupOptions == null) {
                 popupOptions = defaultPopupOptions.clone();
             }
+            generator = new GeneratorTool().generate(context , rootView , popupOptions);
         }
-        popupWindow = new PopupWindow(rootView,
-                popupOptions.getWindowWith(),
-                popupOptions.getWindowHeight(), false);
-        popupWindow.setFocusable(true);
-        popupWindow.setTouchable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                final WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
-                if (lp.alpha != 1.0f) {
-                    lp.alpha = 1.0f;
-                    ((Activity) context).getWindow().setAttributes(lp);
-                }
-            }
-        });
+        generator.create();
         initView(rootView);
     }
 
-    private void initDefaultOption() {
-        defaultPopupOptions = new PopupOptions(context);
-        defaultPopupOptions.windowWidth((int) (DEFAULT_WITDH * context.getResources().getDisplayMetrics().density));
-        defaultPopupOptions.windowHeight((int) (DEFAULT_HEIGHT * context.getResources().getDisplayMetrics().density));
-//        defaultPopupOptions.background(R.drawable.game_gift_popupwindow_use_background);
-    }
-
-    protected View inflate(Context context, int layout) {
-        rootView = LayoutInflater.from(context).inflate(layout, null);
-        return rootView;
-    }
-
     public void showPopupView(View parent, int gravity, int x, int y) {
-        if (Preconditions.assertNotNull(popupWindow)) {
-            popupWindow.showAtLocation(parent, gravity, x, y);
+        if (Preconditions.assertNotNull(generator)) {
+            generator.show(parent, gravity, x, y);
         }
     }
 
     public void showPopupView() {
-        if (Preconditions.assertNotNull(popupWindow)) {
-            popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
-        }
+        showPopupView(rootView, Gravity.CENTER, 0, 0);
     }
 
     public void hidePopupView() {
-        if (Preconditions.assertNotNull(popupWindow) && popupWindow.isShowing()) {
-            popupWindow.dismiss();
+        if (Preconditions.assertNotNull(generator)) {
+            generator.hide();
         }
     }
 
     public boolean isShowing() {
-        return Preconditions.assertNotNull(popupWindow) && popupWindow.isShowing();
+        return Preconditions.assertNotNull(generator) && generator.isShowing();
     }
 
     public abstract View onCreateView();
@@ -99,4 +71,15 @@ public abstract class AbsPopupProvider<T> {
     public abstract void updateView(T data);
 
     public abstract void initOperation();
+
+    private void initDefaultOption() {
+        defaultPopupOptions = new PopupOptions(context);
+        defaultPopupOptions.windowWidth((int) (DEFAULT_WIDTH * context.getResources().getDisplayMetrics().density));
+        defaultPopupOptions.windowHeight((int) (DEFAULT_HEIGHT * context.getResources().getDisplayMetrics().density));
+    }
+
+    protected View inflate(Context context, int layout) {
+        rootView = LayoutInflater.from(context).inflate(layout, null);
+        return rootView;
+    }
 }

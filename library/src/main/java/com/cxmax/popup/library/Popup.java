@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 /**
  * @describe : a builder-pattern to design a popup with different params(you can use custom-made layout and custom window params )
@@ -51,7 +52,6 @@ public class Popup {
 
         public PopupManager(Context context) {
             this.context = context;
-            options = new PopupOptions(context);
         }
 
         public PopupManager(AppCompatActivity appCompatActivity) {
@@ -68,26 +68,31 @@ public class Popup {
         }
 
         public PopupManager backgroundId(int backgroundId) {
+            initOptions();
             options.backgroundId(backgroundId);
             return this;
         }
 
         public PopupManager windowWidth(int windowWith) {
+            initOptions();
             options.windowWidth(windowWith);
             return this;
         }
 
         public PopupManager windowHeight(int windowHeight) {
+            initOptions();
             options.windowHeight(windowHeight);
             return this;
         }
 
         public PopupManager background(Drawable backgroundDrawable) {
+            initOptions();
             options.background(backgroundDrawable);
             return this;
         }
 
         public PopupManager background(int backgroundId) {
+            initOptions();
             options.background(backgroundId);
             return this;
         }
@@ -102,36 +107,43 @@ public class Popup {
             return this;
         }
 
+        public PopupManager asDialog(){
+            initOptions();
+            options.style(PopupOptions.STYLE_DIALOG);
+            return this;
+        }
+
         public PopupManager apply() {
-            if (context == null) {
-                throw new NullPointerException("You cannot apply() on a null Context");
-            }
+            assertNotNull();
             if (absPopupProvider == null){
-                options = new PopupOptions(context);
                 absPopupProvider = new PopupFactory().createPopup(clazz);
                 absPopupProvider.context = context;
                 absPopupProvider.popupOptions = options;
                 absPopupProvider.createView();
-                if (data != null) {
-                    absPopupProvider.updateView(data);
-                }
+                absPopupProvider.updateView(data);
             }
             return this;
         }
 
         @Override
         public void showPopupView() {
-            if (absPopupProvider == null) {
-                throw new NullPointerException("you should invoke apply() method at last");
-            }
-            if (data == null) {
-                throw new NullPointerException("there is no data found, you should invoke data() to bind dada before showPopupView()");
-            }
-            if (!assertHasDestroyed(context) && !isShowing()){
-                absPopupProvider.showPopupView();
+            showPopupView(null,0,0,0);
+
+        }
+
+        public void showPopupView(View parent, int gravity, int x, int y) {
+            if (!assertHasDestroyed(context)
+                    && Preconditions.assertNotNull(absPopupProvider)
+                    && !isShowing()){
+                if (parent == null){
+                    absPopupProvider.showPopupView();
+                    return;
+                }
+                absPopupProvider.showPopupView(parent , gravity , x , y);
             }
         }
 
+        @Deprecated
         @Override
         public void hidePopupView() {
             if (assertIsAdded() && Preconditions.assertNotNull(absPopupProvider)) {
@@ -139,10 +151,25 @@ public class Popup {
             }
         }
 
+        @Deprecated
         @Override
         public void updatePopupView(Object data) {
             if (!assertHasDestroyed(context) && Preconditions.assertNotNull(data) && Preconditions.assertNotNull(absPopupProvider)){
                 absPopupProvider.updateView(data);
+            }
+        }
+
+        private void initOptions(){
+            if (!Preconditions.assertNotNull(options)) {
+                options = new PopupOptions(context);
+            }
+        }
+
+        private void assertNotNull(){
+            if (context == null) {
+                throw new NullPointerException("You cannot apply() on a null Context");
+            }else if (data == null) {
+                throw new NullPointerException("there is no data found, you should invoke data() to bind dada before showPopupView()");
             }
         }
 
@@ -172,8 +199,10 @@ public class Popup {
     public interface Action<T> {
         void showPopupView();
 
+        @Deprecated
         void hidePopupView();
 
+        @Deprecated
         void updatePopupView(T data);
     }
 }
