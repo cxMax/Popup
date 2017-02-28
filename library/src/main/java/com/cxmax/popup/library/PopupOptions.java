@@ -1,7 +1,9 @@
 package com.cxmax.popup.library;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 
 /**
  * @describe : a popup-window params
@@ -49,6 +51,7 @@ public class PopupOptions implements Cloneable {
 
     public void background(int backgroundId) {
         this.backgroundId = backgroundId;
+        this.backgroundDrawable = new ColorDrawable(ContextCompat.getColor(context, R.color.colorPrimary));
     }
 
     public Drawable getBackgroundDrawable() {

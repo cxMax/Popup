@@ -14,8 +14,8 @@ public interface PopupOperation<T> {
     void closeTask();  //handle window-close-event
     void handleTask(T t); //handle button-click-event
 
-    public interface PopupView{
+    public interface PopupView<T>{
         void showCloseTaskUi();
-        void showHandleTaskUi();
+        void showHandleTaskUi(T t);
     }
 }

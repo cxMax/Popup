@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cxmax.popup.R;
 import com.cxmax.popup.bean.CouponItem;
@@ -27,34 +28,33 @@ public class CouponProvider extends AbsPopupProvider<CouponItem> implements Popu
     private ConstraintLayout layout;
     private TextView title;
     private TextView content;
-    private Button button;
-    private ImageView close;
+    private Button open , close;
 
     @Override
     public View onCreateView() {
-        return inflate(context, R.layout.game_coupon_popup);
+        return inflate(context, R.layout.sample_popup_layout);
     }
 
     @Override
     public void initView(View rootView) {
-        layout = (ConstraintLayout) rootView.findViewById(R.id.coupon_popup_layout);
-        title = (TextView) rootView.findViewById(R.id.coupon_popup_title);
-        content = (TextView) rootView.findViewById(R.id.coupon_popup_content);
-        button = (Button) rootView.findViewById(R.id.coupon_popup_btn);
-        close = (ImageView) rootView.findViewById(R.id.coupon_popup_img_close);
-        button.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        layout = (ConstraintLayout) rootView.findViewById(R.id.popup_layout);
+        title = (TextView) rootView.findViewById(R.id.popup_title);
+        content = (TextView) rootView.findViewById(R.id.popup_content);
+        open = (Button) rootView.findViewById(R.id.popup_open_btn);
+        close = (Button) rootView.findViewById(R.id.popup_close_btn);
     }
 
     @Override
     public void updateView(final CouponItem data) {
         //mock data
         if (Preconditions.assertNotNull(data)){
-            layout.setBackground(context.getDrawable(R.drawable.game_gift_popupwindow_grab_background));
+            if (popupOptions.getBackgroundDrawable() != null) {
+                layout.setBackground(popupOptions.getBackgroundDrawable());
+            }
             title.setText(data.title);
             content.setText(data.content);
-            button.setVisibility(View.VISIBLE);
-            button.setText(context.getString(R.string.gift_copy_and_in));
-            button.setOnClickListener(new View.OnClickListener() {
+            open.setText(context.getString(R.string.btn_open));
+            open.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     popupOperation.handleTask(data);
@@ -89,19 +89,15 @@ public class CouponProvider extends AbsPopupProvider<CouponItem> implements Popu
 
     @Override
     public void showCloseTaskUi() {
-
-    }
-
-    @Override
-    public void showHandleTaskUi() {
-
+        Toast.makeText(context , "点击了关闭按钮"  , Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showHandleTaskUi(CouponItem couponItem) {
-        if (Preconditions.assertNotNull(couponItem)){
-            //mock data
-            button.setText(couponItem.title);
-        }
+        Toast.makeText(context , "点击了打开按钮"  , Toast.LENGTH_SHORT).show();
+//        if (Preconditions.assertNotNull(couponItem)){
+//            //mock data
+//            title.setText(couponItem.title);
+//        }
     }
 }

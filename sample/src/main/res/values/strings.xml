@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Popup</string>
+    <string name="btn_open">打开</string>
 </resources>
