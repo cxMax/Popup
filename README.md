@@ -10,6 +10,8 @@ popup 用来解决弹窗(popupwindow/dialog)初始化以及交互事件耦合的
 3. todo 增加动画接口， 使弹出效果更加酷炫。
 
 ### 使用步骤
+>（可以参考项目sample里面的代码）
+
 用户在处理与弹窗交互相关的业务需求的时, 只需要关心建立以下三个类即可.  
 1. JavaBean类, 初始化与弹窗业务相关的实体类, 类似CouponItem/GiftItem  
 2. 继承AbsPopupProvider类,类似CouponProvider.
