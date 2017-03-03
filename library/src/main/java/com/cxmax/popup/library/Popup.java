@@ -11,15 +11,15 @@ import android.view.View;
 /**
  * @describe : a builder-pattern to design a popup with different params(you can use custom-made layout and custom window params )
  * @usage steps:
- * 1. set up pojo to bind data like {@link com.meizu.cloud.coupon.item.CouponItem}
+ * 1. set up pojo to bind data
  * 2. extends {@link AbsPopupProvider} and override onCreateView(),initView(),updateView(),initOperation() ; showPopupView() is not necessary
  * 3. in an activity or a fragment init PopupManager instance and init popup-related params
- * 4. the popup-interaction-event can be define in {@link PopupOperation} and expand like {@link com.meizu.cloud.coupon.operate.CouponOperation}
- * 5. actually the {@link com.meizu.cloud.coupon.provider.CouponProvider} hold the {@link com.meizu.cloud.coupon.operate.CouponOperation}
+ * 4. the popup-interaction-event can be define in {@link PopupOperation} and expand
+ * 5. actually the {@link AbsPopupProvider} hold the {@link PopupOperation}
  *    and handle the operate callback to change view ,
  *    you need complete the whole logic in those class
- *    (View logic in {@link com.meizu.cloud.coupon.provider.CouponProvider} ,
- *    operate logic int {@link com.meizu.cloud.coupon.operate.CouponOperation})
+ *    (View logic in {@link AbsPopupProvider} ,
+ *    operate logic int {@link PopupOperation})
  * btw: to generate a whole popup view-to-logic interaction , use this lib you only use those steps
  * <p>
  *     manager = Popup.with(this)
@@ -67,12 +67,6 @@ public class Popup {
             this.context = fragment.getActivity();
         }
 
-        public PopupManager backgroundId(int backgroundId) {
-            initOptions();
-            options.backgroundId(backgroundId);
-            return this;
-        }
-
         public PopupManager windowWidth(int windowWith) {
             initOptions();
             options.windowWidth(windowWith);
@@ -94,6 +88,18 @@ public class Popup {
         public PopupManager background(int backgroundId) {
             initOptions();
             options.background(backgroundId);
+            return this;
+        }
+
+        public PopupManager dialogStyle(int dialogStyle){
+            initOptions();
+            options.dialogStyle(dialogStyle);
+            return this;
+        }
+
+        public PopupManager animStyle(int animStyle){
+            initOptions();
+            options.animStyle(animStyle);
             return this;
         }
 

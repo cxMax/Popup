@@ -3,6 +3,7 @@ package com.cxmax.popup.library;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public abstract class AbsPopupProvider<T> {
 
     private static final int DEFAULT_WIDTH = 312;
     private static final int DEFAULT_HEIGHT = 390;
+//    private static final int DEFAULT_STYLE = R.style.Theme_Flyme_AppCompat_Light_Dialog_Alert;
 
     protected View rootView;
     protected Context context;
@@ -44,7 +46,7 @@ public abstract class AbsPopupProvider<T> {
         initView(rootView);
     }
 
-    public void showPopupView(View parent, int gravity, int x, int y) {
+    public void showPopupView(@NonNull View parent, int gravity, int x, int y) {
         if (Preconditions.assertNotNull(generator)) {
             generator.show(parent, gravity, x, y);
         }
@@ -66,9 +68,9 @@ public abstract class AbsPopupProvider<T> {
 
     public abstract View onCreateView();
 
-    public abstract void initView(View rootView);
+    public abstract void initView(@NonNull View rootView);
 
-    public abstract void updateView(T data);
+    public abstract void updateView(@NonNull T data);
 
     public abstract void initOperation();
 
@@ -76,6 +78,7 @@ public abstract class AbsPopupProvider<T> {
         defaultPopupOptions = new PopupOptions(context);
         defaultPopupOptions.windowWidth((int) (DEFAULT_WIDTH * context.getResources().getDisplayMetrics().density));
         defaultPopupOptions.windowHeight((int) (DEFAULT_HEIGHT * context.getResources().getDisplayMetrics().density));
+//        defaultPopupOptions.dialogStyle(DEFAULT_STYLE);
     }
 
     protected View inflate(Context context, int layout) {

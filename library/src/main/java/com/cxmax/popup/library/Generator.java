@@ -2,11 +2,12 @@ package com.cxmax.popup.library;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.WindowManager;
 
 /**
- * @describe :
+ * @describe : base class to generate a real dialog or popupwindow, and alse provide children abstract method to override
  * @usage :
  * <p>
  * <p>
@@ -18,7 +19,7 @@ public abstract class Generator {
     protected View rootView;
     protected PopupOptions popupOptions;
 
-    public Generator(Context context , View rootView , PopupOptions popupOptions) {
+    public Generator(@NonNull Context context, @NonNull View rootView, @NonNull PopupOptions popupOptions) {
         this.context = context;
         this.rootView = rootView;
         this.popupOptions = popupOptions;
@@ -32,7 +33,7 @@ public abstract class Generator {
 
     abstract void create();
 
-    abstract void show(View parent, int gravity, int x, int y);
+    abstract void show(@NonNull View parent, int gravity, int x, int y);
 
     abstract void hide();
 

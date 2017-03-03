@@ -4,32 +4,37 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.WindowManager;
 
 /**
- * @describe :
+ * @describe :generate dialog
  * @usage :
  * <p>
  * <p>
  * Created by cxmax on 2017/2/27.
  */
 
-public class DialogGenerator extends Generator{
+public class DialogGenerator extends Generator {
 
     private Dialog dialog;
 
 
-    public DialogGenerator(Context context, View rootView, PopupOptions popupOptions) {
+    public DialogGenerator(@NonNull Context context, @NonNull View rootView, @NonNull PopupOptions popupOptions) {
         super(context, rootView, popupOptions);
     }
 
     @Override
     public void create() {
         if (dialog == null) {
-            dialog = new Dialog(context, 0 /*R.style.Theme_Flyme_AppCompat_Light_Dialog_Alert*/);
+            dialog = new Dialog(context, popupOptions.getDialogStyle());
         }
         dialog.setContentView(rootView);
+        if (Preconditions.assertNotNull(popupOptions.getAnimStyle())
+                && Preconditions.assertNotNull(dialog.getWindow())) {
+            dialog.getWindow().setWindowAnimations(popupOptions.getAnimStyle());
+        }
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -61,7 +66,7 @@ public class DialogGenerator extends Generator{
         return Preconditions.assertNotNull(dialog) && dialog.isShowing();
     }
 
-    public Dialog getDialog(){
+    public Dialog getDialog() {
         return dialog;
     }
 }

@@ -3,6 +3,7 @@ package com.cxmax.popup.library;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 /**
@@ -18,19 +19,16 @@ public class PopupOptions implements Cloneable {
     public static final int STYLE_DIALOG = 1;
 
     private Drawable backgroundDrawable;
-    private int backgroundId;
     private int windowWith;
     private int windowHeight;
     private Context context;
     private int style; //0-popupwindow 1-dialog
+    private int dialogStyle;
+    private int animStyle;
 
-    public PopupOptions(Context context) {
+    public PopupOptions(@NonNull Context context) {
         this.context = context;
         style = STYLE_POPUP;
-    }
-
-    public void backgroundId(int backgroundId) {
-        this.backgroundId = backgroundId;
     }
 
     public void windowWidth(int windowWith) {
@@ -49,9 +47,16 @@ public class PopupOptions implements Cloneable {
         this.backgroundDrawable = backgroundDrawable;
     }
 
+    public void dialogStyle(int dialogStyle) {
+        this.dialogStyle = dialogStyle;
+    }
+
     public void background(int backgroundId) {
-        this.backgroundId = backgroundId;
-        this.backgroundDrawable = new ColorDrawable(ContextCompat.getColor(context, R.color.colorPrimary));
+        this.backgroundDrawable = context.getDrawable(backgroundId);
+    }
+
+    public void animStyle(int animStyle) {
+        this.animStyle = animStyle;
     }
 
     public Drawable getBackgroundDrawable() {
@@ -68,6 +73,14 @@ public class PopupOptions implements Cloneable {
 
     public int getStyle(){
         return style;
+    }
+
+    public int getDialogStyle() {
+        return dialogStyle;
+    }
+
+    public int getAnimStyle() {
+        return animStyle;
     }
 
     @Override
