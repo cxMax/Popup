@@ -15,19 +15,20 @@ popup 用来解决弹窗(popupwindow/dialog)初始化以及交互事件耦合的
 ### 待优化or缺点 
 1. 在AbsPopupProvider的createView() ; PopupGenerator的create(); DialogGenerator的create(); 代码还可以更优雅的处理.
 2. 关于整个popup的链式调用设计,我觉得可能存在一点缺陷,以下方法必须调用.但方法调用顺序可随意更改.  
-  <b>todo</b> 
-  作为优化点, 我在想, 链式调用设计可不可划分为两部分,即非必须参数,和必须参数.直白一点就是,以下调用的必要参数,作为(Object... params)只要调用一次就可以了.类似于glide的transform()的调用
-```
-Glide.with(context)
-     .transform()
-```
-  
 ```
 Popup.with(this)
      .data(data)
      .clz(CouponProvider.class)
      .apply()
      .showPopupView();
+```
+  <b>todo</b>  
+  作为优化点, 我在想, 链式调用设计可不可划分为两部分,即非必须参数,和必须参数.直白一点就是,以下调用的必要参数,作为(Object... params)只要调用一次就可以了.类似于glide的transform()的调用
+```
+Glide.with(context)
+     .transform(new XXTransformation() 
+     , new XXTransformation() 
+     , new CenterCrop(context));
 ```
 
 ### 使用步骤
