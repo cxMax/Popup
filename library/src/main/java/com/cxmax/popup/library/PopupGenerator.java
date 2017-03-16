@@ -3,7 +3,9 @@ package com.cxmax.popup.library;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
@@ -41,6 +43,7 @@ public class PopupGenerator extends Generator {
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                ((Activity) context).getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, R.color.white)));
                 final WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
                 if (lp.alpha != 1.0f) {
                     setBackgroundAlpha(1.0f);
@@ -52,7 +55,7 @@ public class PopupGenerator extends Generator {
     @Override
     public void show(View parent, int gravity, int x, int y) {
         if (Preconditions.assertNotNull(popupWindow)) {
-            setBackgroundAlpha(0.4f);
+            ((Activity) context).getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, R.color.transparent)));
             popupWindow.showAtLocation(parent, gravity, x, y);
         }
     }

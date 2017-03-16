@@ -38,4 +38,8 @@ public abstract class Generator {
     abstract void hide();
 
     abstract boolean isShowing();
+
+    public View getRootView() {
+        return rootView;
+    }
 }

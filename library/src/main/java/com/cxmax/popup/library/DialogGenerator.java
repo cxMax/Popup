@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -29,6 +31,7 @@ public class DialogGenerator extends Generator {
     public void create() {
         if (dialog == null) {
             dialog = new Dialog(context, popupOptions.getDialogStyle());
+            dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
         }
         dialog.setContentView(rootView);
         if (Preconditions.assertNotNull(popupOptions.getAnimStyle())
@@ -38,6 +41,7 @@ public class DialogGenerator extends Generator {
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
+                ((Activity) context).getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, R.color.white)));
                 final WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
                 if (lp.alpha != 1.0f) {
                     setBackgroundAlpha(1.0f);
@@ -49,7 +53,6 @@ public class DialogGenerator extends Generator {
     @Override
     void show(View parent, int gravity, int x, int y) {
         if (Preconditions.assertNotNull(dialog)) {
-            setBackgroundAlpha(0.4f);
             dialog.show();
         }
     }

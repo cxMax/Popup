@@ -23,10 +23,10 @@ public abstract class AbsPopupProvider<T> {
 
     private static final int DEFAULT_WIDTH = 312;
     private static final int DEFAULT_HEIGHT = 390;
-//    private static final int DEFAULT_STYLE = R.style.Theme_Flyme_AppCompat_Light_Dialog_Alert;
+    private static final int DEFAULT_STYLE = android.R.style.Theme_DeviceDefault_Light_Dialog_Alert;
 
     protected View rootView;
-    protected Context context;
+    @NonNull protected Activity activity;
     protected PopupOptions popupOptions;
     protected PopupOptions defaultPopupOptions;
     protected PopupOperation popupOperation;
@@ -40,7 +40,7 @@ public abstract class AbsPopupProvider<T> {
             if (popupOptions == null) {
                 popupOptions = defaultPopupOptions.clone();
             }
-            generator = new GeneratorTool().generate(context , rootView , popupOptions);
+            generator = new GeneratorTool().generate(activity , rootView , popupOptions);
         }
         generator.create();
         initView(rootView);
@@ -66,6 +66,10 @@ public abstract class AbsPopupProvider<T> {
         return Preconditions.assertNotNull(generator) && generator.isShowing();
     }
 
+    public View getRootView() {
+        return generator.getRootView();
+    }
+
     public abstract View onCreateView();
 
     public abstract void initView(@NonNull View rootView);
@@ -75,13 +79,13 @@ public abstract class AbsPopupProvider<T> {
     public abstract void initOperation();
 
     private void initDefaultOption() {
-        defaultPopupOptions = new PopupOptions(context);
-        defaultPopupOptions.windowWidth((int) (DEFAULT_WIDTH * context.getResources().getDisplayMetrics().density));
-        defaultPopupOptions.windowHeight((int) (DEFAULT_HEIGHT * context.getResources().getDisplayMetrics().density));
-//        defaultPopupOptions.dialogStyle(DEFAULT_STYLE);
+        defaultPopupOptions = new PopupOptions(activity);
+        defaultPopupOptions.windowWidth((int) (DEFAULT_WIDTH * activity.getResources().getDisplayMetrics().density));
+        defaultPopupOptions.windowHeight((int) (DEFAULT_HEIGHT * activity.getResources().getDisplayMetrics().density));
+        defaultPopupOptions.dialogStyle(DEFAULT_STYLE);
     }
 
-    protected View inflate(Context context, int layout) {
+    protected View inflate(@NonNull Context context, int layout) {
         rootView = LayoutInflater.from(context).inflate(layout, null);
         return rootView;
     }

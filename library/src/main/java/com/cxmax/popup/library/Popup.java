@@ -5,6 +5,8 @@ import android.app.Application;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -37,34 +39,39 @@ import android.view.View;
 
 public class Popup {
 
-    public static PopupManager with(Context context) {
-        return new PopupManager(context);
+    public static PopupManager with(@NonNull AppCompatActivity appCompatActivity) {
+        return new PopupManager(appCompatActivity);
+    }
+
+    public static PopupManager with(@NonNull Activity activity) {
+        return new PopupManager(activity);
+    }
+
+    public static PopupManager with(@NonNull Fragment fragment) {
+        return new PopupManager(fragment);
     }
 
     public static class PopupManager<T> implements Action<T> {
 
-        private Context context;
+        @NonNull private Activity activity;
+        @Nullable
         private Fragment fragment;
         private PopupOptions options;
         private T data;
         private Class<? extends AbsPopupProvider> clazz;
         private AbsPopupProvider absPopupProvider;
 
-        public PopupManager(Context context) {
-            this.context = context;
+        public PopupManager(@NonNull AppCompatActivity appCompatActivity) {
+            this.activity = appCompatActivity;
         }
 
-        public PopupManager(AppCompatActivity appCompatActivity) {
-            this.context = appCompatActivity;
+        public PopupManager(@NonNull Activity activity) {
+            this.activity = activity;
         }
 
-        public PopupManager(Activity activity) {
-            this.context = activity;
-        }
-
-        public PopupManager(Fragment fragment) {
+        public PopupManager(@NonNull Fragment fragment) {
             this.fragment = fragment;
-            this.context = fragment.getActivity();
+            this.activity = fragment.getActivity();
         }
 
         public PopupManager windowWidth(int windowWith) {
@@ -123,7 +130,7 @@ public class Popup {
             assertNotNull();
             if (absPopupProvider == null){
                 absPopupProvider = new PopupFactory().createPopup(clazz);
-                absPopupProvider.context = context;
+                absPopupProvider.activity = activity;
                 absPopupProvider.popupOptions = options;
                 absPopupProvider.createView();
                 absPopupProvider.updateView(data);
@@ -138,7 +145,7 @@ public class Popup {
         }
 
         public void showPopupView(View parent, int gravity, int x, int y) {
-            if (!assertHasDestroyed(context)
+            if (!assertHasDestroyed(activity)
                     && Preconditions.assertNotNull(absPopupProvider)
                     && !isShowing()){
                 if (parent == null){
@@ -152,7 +159,13 @@ public class Popup {
         @Deprecated
         @Override
         public void hidePopupView() {
-            if (assertIsAdded() && Preconditions.assertNotNull(absPopupProvider)) {
+            if (fragment != null) {
+                if (assertIsAdded() && Preconditions.assertNotNull(absPopupProvider)) {
+                    absPopupProvider.hidePopupView();
+                }
+                return;
+            }
+            if (Preconditions.assertNotNull(absPopupProvider)) {
                 absPopupProvider.hidePopupView();
             }
         }
@@ -160,19 +173,19 @@ public class Popup {
         @Deprecated
         @Override
         public void updatePopupView(Object data) {
-            if (!assertHasDestroyed(context) && Preconditions.assertNotNull(data) && Preconditions.assertNotNull(absPopupProvider)){
+            if (!assertHasDestroyed(activity) && Preconditions.assertNotNull(data) && Preconditions.assertNotNull(absPopupProvider)){
                 absPopupProvider.updateView(data);
             }
         }
 
         private void initOptions(){
             if (!Preconditions.assertNotNull(options)) {
-                options = new PopupOptions(context);
+                options = new PopupOptions(activity);
             }
         }
 
         private void assertNotNull(){
-            if (context == null) {
+            if (activity == null) {
                 throw new NullPointerException("You cannot apply() on a null Context");
             }else if (data == null) {
                 throw new NullPointerException("there is no data found, you should invoke data() to bind dada before showPopupView()");

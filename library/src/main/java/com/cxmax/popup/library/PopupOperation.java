@@ -1,5 +1,7 @@
 package com.cxmax.popup.library;
 
+import android.support.annotation.NonNull;
+
 /**
  * @describe : a window-interaction-event interface
  * @usage:
@@ -12,10 +14,11 @@ package com.cxmax.popup.library;
 
 public interface PopupOperation<T> {
     void closeTask();  //handle window-close-event
-    void handleTask(T t); //handle button-click-event
+    void handleTask(@NonNull T t); //handle button-click-event
 
     public interface PopupView<T>{
         void showCloseTaskUi();
-        void showHandleTaskUi(T t);
+        void showHandleTaskUi(@NonNull T t);
     }
 }
+
