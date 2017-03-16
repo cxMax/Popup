@@ -80,13 +80,13 @@ Glide.with(context)
 4. AbsPopupOperation , 弹窗view的交互逻辑
 5. Popup , 对外提供的一个链式调用 , 调用的参数包含弹窗的一些属性
 
-###感谢
+### 感谢
 1. drakeet/MultiType：
 https://github.com/drakeet/MultiType
 2. bumptech/glide
 https://github.com/bumptech/glide
 
-###最后
+### 最后
 1. 因为jcenter()老是上传失败，现目前还不能通过gradle直接引用，所以还请大家暂时pull一下源码，源码都在library的module下面
 2. 如果对于library代码封装有更好的建议，建议直接提issue，我不会断更新代码库，并且增加其他在实际项目中，所封装的一些代码。
 
