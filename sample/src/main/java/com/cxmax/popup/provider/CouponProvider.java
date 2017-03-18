@@ -32,7 +32,7 @@ public class CouponProvider extends AbsPopupProvider<CouponItem> implements Popu
 
     @Override
     public View onCreateView() {
-        return inflate(context, R.layout.sample_popup_layout);
+        return inflate(activity, R.layout.sample_popup_layout);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CouponProvider extends AbsPopupProvider<CouponItem> implements Popu
             }
             title.setText(data.title);
             content.setText(data.content);
-            open.setText(context.getString(R.string.btn_open));
+            open.setText(activity.getString(R.string.btn_open));
             open.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,12 +89,12 @@ public class CouponProvider extends AbsPopupProvider<CouponItem> implements Popu
 
     @Override
     public void showCloseTaskUi() {
-        Toast.makeText(context , "点击了关闭按钮"  , Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity , "点击了关闭按钮"  , Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showHandleTaskUi(CouponItem couponItem) {
-        Toast.makeText(context , "点击了打开按钮"  , Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity , "点击了打开按钮"  , Toast.LENGTH_SHORT).show();
 //        if (Preconditions.assertNotNull(couponItem)){
 //            //mock data
 //            title.setText(couponItem.title);
