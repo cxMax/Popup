@@ -32,6 +32,7 @@ public class DialogGenerator extends Generator {
         if (dialog == null) {
             dialog = new Dialog(context, popupOptions.getDialogStyle());
             dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+            dialog.getWindow().setLayout(popupOptions.getWindowWith() , popupOptions.getWindowHeight());
         }
         dialog.setContentView(rootView);
         if (Preconditions.assertNotNull(popupOptions.getAnimStyle())
