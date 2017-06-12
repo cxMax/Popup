@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 /**
@@ -26,9 +27,12 @@ public abstract class Generator {
     }
 
     protected void setBackgroundAlpha(float f) {
-        WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
-        lp.alpha = f;
-        ((Activity) context).getWindow().setAttributes(lp);
+        Window window = ((Activity) context).getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams lp = window.getAttributes();
+            lp.alpha = f;
+            ((Activity) context).getWindow().setAttributes(lp);
+        }
     }
 
     abstract void create();

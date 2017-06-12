@@ -43,10 +43,7 @@ public class DialogGenerator extends Generator {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 ((Activity) context).getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, R.color.white)));
-                final WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
-                if (lp.alpha != 1.0f) {
-                    setBackgroundAlpha(1.0f);
-                }
+                setBackgroundAlpha(1.0f);
             }
         });
     }
