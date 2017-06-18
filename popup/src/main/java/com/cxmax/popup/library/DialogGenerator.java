@@ -8,13 +8,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.WindowManager;
 
 /**
- * @describe :generate dialog
- * @usage :
- * <p>
- * <p>
+ * describe :generate dialog
+ * usage :
  * Created by cxmax on 2017/2/27.
  */
 

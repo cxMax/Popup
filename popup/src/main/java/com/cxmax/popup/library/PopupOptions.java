@@ -1,16 +1,12 @@
 package com.cxmax.popup.library;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 
 /**
- * @describe : a popup-window params
- * @usage :
- * <p>
- * <p>
+ * describe : a popup-window params
+ * usage :
  * Created by cxmax on 2017/2/25.
  */
 

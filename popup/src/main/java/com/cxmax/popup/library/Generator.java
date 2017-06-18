@@ -8,10 +8,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * @describe : base class to generate a real dialog or popupwindow, and alse provide children abstract method to override
- * @usage :
- * <p>
- * <p>
+ * describe : base class to generate a real dialog or popupwindow, and alse provide children abstract method to override
+ * usage :
  * Created by cxmax on 2017/2/27.
  */
 

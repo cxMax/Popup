@@ -11,8 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 /**
- * @describe : a builder-pattern to design a popup with different params(you can use custom-made layout and custom window params )
- * @usage steps:
+ * describe : a builder-pattern to design a popup with different params(you can use custom-made layout and custom window params )
+ * usage steps:
  * 1. set up pojo to bind data
  * 2. extends {@link AbsPopupProvider} and override onCreateView(),initView(),updateView(),initOperation() ; showPopupView() is not necessary
  * 3. in an activity or a fragment init PopupManager instance and init popup-related params
@@ -23,7 +23,6 @@ import android.view.View;
  *    (View logic in {@link AbsPopupProvider} ,
  *    operate logic int {@link PopupOperation})
  * btw: to generate a whole popup view-to-logic interaction , use this lib you only use those steps
- * <p>
  *     manager = Popup.with(this)
  *              .windowHeight(390)
  *              .windowWidth(300)
@@ -33,7 +32,6 @@ import android.view.View;
  *              .apply();
  *     manager.updatePopupView(data);
  *     manager.showPopupView();
- * </p>
  * Created by cxmax on 2017/2/25.
  */
 

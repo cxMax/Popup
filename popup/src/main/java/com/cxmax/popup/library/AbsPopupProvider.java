@@ -2,20 +2,15 @@ package com.cxmax.popup.library;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.PopupWindow;
 
 /**
- * @describe : a base popup initialized class,
- * @usage : it's provide abstract method to init popup,fill data in popup,init popup-interaction-event callback
+ * describe : a base popup initialized class,
+ * usage : it's provide abstract method to init popup,fill data in popup,init popup-interaction-event callback
  * the child class need override those abstract method
- * <p>
- * <p>
  * Created by cxmax on 2017/2/25.
  */
 

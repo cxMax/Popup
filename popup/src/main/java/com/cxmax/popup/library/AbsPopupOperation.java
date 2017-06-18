@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 /**
- * @describe : base popup-operation class, aim at setting PopupView change callback
- * @usage : you can invoke this callback class in the {@link AbsPopupProvider} , and realize the detailed view-change event
- * <p>
- * </p>
+ * describe : base popup-operation class, aim at setting PopupView change callback
+ * usage : you can invoke this callback class in the {@link AbsPopupProvider} , and realize the detailed view-change event
  * Created by caixi on 17-2-24.
  */
 

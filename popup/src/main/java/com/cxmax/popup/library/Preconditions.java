@@ -10,10 +10,8 @@ import android.text.TextUtils;
 import java.util.Collection;
 
 /**
- * @describe : Contains some assertions.
- * @usage :
- * <p>
- * <p>
+ * describe : Contains some assertions.
+ * usage :
  * Created by cxmax on 2017/2/25.
  */
 

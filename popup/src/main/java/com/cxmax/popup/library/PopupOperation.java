@@ -3,12 +3,10 @@ package com.cxmax.popup.library;
 import android.support.annotation.NonNull;
 
 /**
- * @describe : a window-interaction-event interface
- * @usage:
+ * describe : a window-interaction-event interface
+ * usage:
  * u can expand this interface by actual business requirements.
- * close() && handle() just are simple window-interaction events ,
- * <p>
- * <p>
+ * close() ,  handle() just are simple window-interaction events ,
  * Created by cxmax on 2017/2/25.
  */
 

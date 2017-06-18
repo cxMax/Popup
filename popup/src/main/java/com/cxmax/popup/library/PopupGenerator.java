@@ -2,19 +2,15 @@ package com.cxmax.popup.library;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 /**
- * @describe : generate popupwindow
- * @usage :
- * <p>
- * <p>
+ * describe : generate popupwindow
+ * usage :
  * Created by cxmax on 2017/2/27.
  */
 

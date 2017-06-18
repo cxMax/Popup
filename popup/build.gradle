@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 25
@@ -26,20 +27,61 @@ android {
     }
 }
 
+group = 'com.cxmax.popup'
+version = '1.0'
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 }
 
-publish {
-    userOrg = 'cxmax'
-    groupId = 'com.cxmax'//jcenter上的路径
-    artifactId = 'popup'//项目名称
-    publishVersion = '1.0.0'//版本号
-    desc = 'An Android wrappe library to design a popup or dialog with different params and custom layout'//描述，不重要
-    website = 'https://github.com/cxMax/Popup'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
 }
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+artifacts {
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    pkg {
+        repo = 'maven'
+        name = 'com.cxmax.popup'
+
+        version {
+            name = '1.0'
+            desc = "a popup dialog wrapper library"
+            vcsTag = '1.0'
+        }
+
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/cxMax/Popup/Popup.git'
+        websiteUrl = 'https://github.com/cxMax/Popup'
+    }
+
+    configurations = ['archives']
+
+}
+

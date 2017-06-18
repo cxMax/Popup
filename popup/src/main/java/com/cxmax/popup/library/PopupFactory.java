@@ -1,10 +1,8 @@
 package com.cxmax.popup.library;
 
 /**
- * @describe : init detailed {@link AbsPopupProvider} like {@link }
- * @usage :
- * <p>
- * <p>
+ * describe : init detailed {@link AbsPopupProvider} like {@link }
+ * usage :
  * Created by cxmax on 2017/2/25.
  */
 

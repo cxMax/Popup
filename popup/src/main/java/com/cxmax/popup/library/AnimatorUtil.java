@@ -8,10 +8,8 @@ import android.view.View;
 import android.view.animation.PathInterpolator;
 
 /**
- * @describe :
- * @usage :
- * <p>
- * <p>
+ * describe :
+ * usage :
  * Created by cxmax on 2017/3/16.
  */
 
@@ -19,8 +17,6 @@ public class AnimatorUtil {
 
     /**
      * dialog twinkle animation
-     * @param view
-     * @param activity
      */
     public void cardChange(View view, Activity activity) {
         ObjectAnimator objectAnimator1 = ObjectAnimator.ofFloat(view, "scaleX", 0.0f, 1.04f);
@@ -70,8 +66,6 @@ public class AnimatorUtil {
 
     /**
      * dialog flip animation
-     * @param view
-     * @param view1
      */
     public void flipChange(final View view, final View view1) {
         ObjectAnimator objectAnimator4 = ObjectAnimator.ofFloat(view, "rotationY", 0.0f, -5.0f);

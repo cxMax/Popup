@@ -5,10 +5,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 /**
- * @describe :
- * @usage :
- * <p>
- * <p>
+ * describe :
+ * usage :
  * Created by cxmax on 2017/2/27.
  */
 
