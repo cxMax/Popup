@@ -1,0 +1,50 @@
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.cxmax.popup'
+version = '1.0'
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task generateJavadocsJar(type: Jar, dependsOn: generateJavadocs) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+artifacts {
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    pkg {
+        repo = 'Maven'
+        name = 'com.cxmax.popup'
+
+        version {
+            name = '1.0'
+            desc = "a popup dialog wrapper library"
+            vcsTag = '1.0'
+        }
+
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/cxMax/Popup/Popup.git'
+        websiteUrl = 'https://github.com/cxMax/Popup'
+    }
+
+    configurations = ['archives']
+
+}
